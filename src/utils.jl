@@ -4,7 +4,7 @@ using Base: Fix1, Fix2
 
 export @matrixop, @vecop
 
-function toNdBatch(A, n=2)
+function toNdBatch(A, n = 2)
     extradims = size(A)[n+1:end]
     reshape(A, size(A)[1:n]..., :), extradims
 end
@@ -19,7 +19,7 @@ function reshape_op_restore(reshape_fn, op, args...)
     reshaped_args = [x[1] for x in reshaped]
     extradims = [x[2] for x in reshaped]
     processed = op(reshaped_args...)
-    processed = isa(processed, Tuple) ? processed : (processed, )
+    processed = isa(processed, Tuple) ? processed : (processed,)
     restored = map(restore_last_dims, processed, extradims)
     length(restored) == 1 ? restored[1] : tuple(restored...)
 end
@@ -32,7 +32,7 @@ end
 
 
 macro matrixop(exp)
-    exp.args = [esc(a) for a in exp.args]    
+    exp.args = [esc(a) for a in exp.args]
     exp.args = vcat([reshape_op_restore, to2dBatch], exp.args)
     exp
 end
