@@ -1,6 +1,7 @@
 module ShapeUtils
 
 using Base: Fix1, Fix2
+using NNlib
 
 export @matrixop, @vecop
 
@@ -35,6 +36,22 @@ macro matrixop(exp)
     exp.args = [esc(a) for a in exp.args]
     exp.args = vcat([reshape_op_restore, to2dBatch], exp.args)
     exp
+end
+
+function split_heads(A; heads=1)
+    length, bs = size(A)[end-1:end]
+    permutedims(reshape(A, :, heads, length, bs), (1, 3, 2, 4))
+end
+
+function join_heads(A)
+    A = permutedims(A, (1, 3, 2, 4))
+    reshape(A, prod(size(A)[1:2]), size(A)[3:4]...)
+end
+
+function transpose(A, dim1::Int, dim2::Int)
+    dims = collect(1:length(size(A)))
+    dims[dim1], dims[dim2] = dims[dim2], dims[dim1]
+    permutedims(A, dims)
 end
 
 

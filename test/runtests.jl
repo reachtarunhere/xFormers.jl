@@ -3,8 +3,9 @@ using Test
 
 @testset "xFormers.jl" begin
     # Write your tests here.
-    using xFormers.ShapeUtils: toNdBatch, reshape_op_restore, to1dBatch, @vecop
-    
+    using xFormers.ShapeUtils: toNdBatch, reshape_op_restore, to1dBatch, @vecop, transpose
+
+    @test size(transpose(rand(2,3,4,5), 1, 2)) == (3, 2, 4, 5)
 
     A = rand(2,2,3,4)
     A_t, extradims = toNdBatch(A)
@@ -19,4 +20,5 @@ using Test
 
     using xFormers.Ops
     @test size(rand(3, 2, 4, 5) ⊛ rand(2, 3, 4, 5) ) == (3, 3, 4, 5)
+
 end
