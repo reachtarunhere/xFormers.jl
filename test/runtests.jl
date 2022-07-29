@@ -16,4 +16,7 @@ using Test
     A_prod = reshape_op_restore(to1dBatch, my_prod, A)
     @test size(A_prod) == (1, 2, 3, 4)
     @test A_prod == prod(A, dims=1)
+
+    using xFormers.Ops
+    @test size(rand(3, 2, 4, 5) ⊛ rand(2, 3, 4, 5) ) == (3, 3, 4, 5)
 end
