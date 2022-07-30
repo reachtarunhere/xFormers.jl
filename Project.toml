@@ -8,6 +8,7 @@ Lux = "b2108857-7c20-44ae-9111-449ecde12c47"
 NNlib = "872c559c-99b0-510c-b3b7-b6c96a88d5cd"
 
 [compat]
+Lux = "0.4"
 julia = "1"
 
 [extras]
