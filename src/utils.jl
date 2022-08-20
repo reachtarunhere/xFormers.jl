@@ -1,9 +1,9 @@
 module ShapeUtils
 
-using Base: Fix1, Fix2
+using Base: Fix2
 using NNlib
 
-export @matrixop, @vecop
+export @matrixop, @vecop, transpose, split_heads, join_heads
 
 function toNdBatch(A, n = 2)
     extradims = size(A)[n+1:end]
